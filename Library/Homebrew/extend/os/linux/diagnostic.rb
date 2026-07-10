@@ -203,6 +203,11 @@ module OS
           else
             [reason]
           end
+          if state == :unavailable && GitHub::Actions.env_set?
+            lines.push("",
+                       "If this is a GitHub Actions container, add `options: --privileged` to the job's " \
+                       "`container` configuration.")
+          end
 
           "#{[
             *lines,

@@ -157,6 +157,19 @@ RSpec.describe Homebrew::Diagnostic::Checks do
     end
   end
 
+  specify "#check_linux_sandbox suggests privileged GitHub Actions containers" do
+    allow(Sandbox).to receive_messages(
+      state:          :unavailable,
+      failure_reason: "Bubblewrap is installed but cannot create a rootless sandbox.",
+    )
+
+    with_env(GITHUB_ACTIONS: "true", HOMEBREW_NO_SANDBOX_LINUX: nil) do
+      expect(checks.check_linux_sandbox).to include(
+        "If this is a GitHub Actions container, add `options: --privileged` to the job's `container` configuration.",
+      )
+    end
+  end
+
   specify "#check_for_symlinked_home" do
     allow(File).to receive(:symlink?).with("/home").and_return(true)
 
