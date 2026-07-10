@@ -93,8 +93,13 @@ module Homebrew
           return
         end
 
-        puts Diagnostic::Finding.support_tier_message(tier:) if Homebrew.failed? && !args.quiet?
-        puts "Your system is ready to brew." if !Homebrew.failed? && !args.quiet?
+        return if args.quiet?
+
+        if Homebrew.failed?
+          puts Diagnostic::Finding.support_tier_message(tier:)
+        else
+          puts "Your system is ready to brew."
+        end
       end
     end
   end
