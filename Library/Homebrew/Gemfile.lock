@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/Homebrew/ruby-macho.git
+  revision: d6a9829bd109d8654fa8eb1a0576da1d9ba1cf6f
+  ref: d6a9829bd109d8654fa8eb1a0576da1d9ba1cf6f
+  specs:
+    ruby-macho (5.0.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -121,7 +128,6 @@ GEM
       language_server-protocol (~> 3.17.0)
       prism (>= 1.2, < 2.0)
       rbs (>= 3, < 5)
-    ruby-macho (5.0.0)
     ruby-prof (2.0.5)
       base64
       ostruct
@@ -219,7 +225,7 @@ DEPENDENCIES
   rubocop-rspec
   rubocop-sorbet
   ruby-lsp
-  ruby-macho
+  ruby-macho!
   ruby-prof
   ruby-progressbar
   simplecov
