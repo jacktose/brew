@@ -67,7 +67,7 @@ RSpec.describe Utils::Autoremove do
     end
   end
 
-  describe "::bottled_formulae_with_no_formula_dependents" do
+  describe "::formulae_with_no_formula_dependents" do
     include_context "with formulae for dependency testing"
 
     before do
@@ -79,7 +79,7 @@ RSpec.describe Utils::Autoremove do
       it "filters out runtime dependencies" do
         allow(tab_from_keg).to receive(:poured_from_bottle).and_return(true)
 
-        expect(described_class.bottled_formulae_with_no_formula_dependents(formulae))
+        expect(described_class.formulae_with_no_formula_dependents(formulae))
           .to eq([formula_with_deps, formula_is_build_dep])
       end
     end
@@ -88,7 +88,7 @@ RSpec.describe Utils::Autoremove do
       it "filters out formulae" do
         allow(tab_from_keg).to receive(:poured_from_bottle).and_return(false)
 
-        expect(described_class.bottled_formulae_with_no_formula_dependents(formulae))
+        expect(described_class.formulae_with_no_formula_dependents(formulae))
           .to eq([])
       end
     end
@@ -102,7 +102,7 @@ RSpec.describe Utils::Autoremove do
         expect(formula_with_deps).not_to receive(:installed_runtime_formula_dependencies)
         expect(first_formula_dep).not_to receive(:installed_runtime_formula_dependencies)
 
-        expect(described_class.bottled_formulae_with_no_formula_dependents(formulae))
+        expect(described_class.formulae_with_no_formula_dependents(formulae))
           .to eq([formula_with_deps, formula_is_build_dep])
       end
     end

@@ -11,6 +11,8 @@ module Homebrew
         description <<~EOS
           Uninstall formulae that were only installed as a dependency of another formula and are now no longer needed.
         EOS
+        switch "--include-built",
+               description: "Include formulae that were built from source."
         switch "-n", "--dry-run",
                description: "List what would be uninstalled, but do not actually uninstall anything."
 
@@ -19,7 +21,7 @@ module Homebrew
 
       sig { override.void }
       def run
-        Cleanup.autoremove(dry_run: args.dry_run?)
+        Cleanup.autoremove(include_built: args.include_built?, dry_run: args.dry_run?)
       end
     end
   end

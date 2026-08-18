@@ -910,8 +910,8 @@ module Homebrew
       puts "from #{HOMEBREW_PREFIX}"
     end
 
-    sig { params(dry_run: T::Boolean).void }
-    def self.autoremove(dry_run: false)
+    sig { params(include_built: T::Boolean, dry_run: T::Boolean).void }
+    def self.autoremove(include_built: false, dry_run: false)
       require "utils/autoremove"
       require "cask/caskroom"
 
@@ -927,7 +927,7 @@ module Homebrew
       end
       casks = Cask::Caskroom.casks
 
-      removable_formulae = Utils::Autoremove.removable_formulae(formulae, casks)
+      removable_formulae = Utils::Autoremove.removable_formulae(formulae, casks, include_built: include_built)
       if (candidate_kegs = removable_formulae.filter_map(&:any_installed_keg).presence) &&
          (required_kegs, = InstalledDependents.find_some_installed_dependents(candidate_kegs)) &&
          (required_names = Set.new(required_kegs.map(&:name)).presence)

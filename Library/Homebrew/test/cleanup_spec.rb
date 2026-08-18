@@ -131,8 +131,9 @@ RSpec.describe Homebrew::Cleanup do
       allow(Formula).to receive(:installed).and_return([removable_formula])
       allow(Cask::Caskroom).to receive(:casks).and_return([])
       allow(Homebrew::EnvConfig).to receive(:no_cleanup_formulae).and_return([])
-      allow(Utils::Autoremove).to receive(:removable_formulae).with([removable_formula],
-                                                                    []).and_return([removable_formula])
+      allow(Utils::Autoremove).to receive(:removable_formulae)
+        .with([removable_formula], [], include_built: false)
+        .and_return([removable_formula])
       allow(InstalledDependents).to receive(:find_some_installed_dependents)
         .with([removable_keg])
         .and_return([[removable_keg], ["pango"]])
